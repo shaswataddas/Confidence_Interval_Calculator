@@ -1,0 +1,114 @@
+<html>
+    <head>
+        <title>Confidence Interval Calculator</title>
+        <style>
+            body{
+                height: 700px;
+                width: 550px;
+                background-image: url('backgro.jpg');
+                background-size: 1800px 1000px;
+                position: fixed;
+                top: 20%;
+                left: 30%;
+                margin-top: -100px;
+                margin-left: -50px;   
+            }
+            .top{
+                padding: 20px;
+                text-decoration: underline;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+            }
+            .info{
+                margin-left: -50px;
+                font-weight: 500;
+                padding-top: 20px;
+                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            }
+            .user{
+                text-align: center;
+                margin-left: -90px;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            }
+            .answer{
+                
+                font-size: 110%;
+            }
+            .con{
+                font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                text-align: center;
+                padding: 10px;
+            }
+            h3{
+                text-align: center;
+            }
+
+            
+        </style>
+    </head>
+    <body>
+        <div>
+            <div class="top">
+                <h1> Confidence Interval Calculator </h1>
+            </div>
+                <p class="info">Enter how many in the sample, the mean and standard deviation, choose a confidence level, and the calculation is done live. Read <a href="https://www.mathsisfun.com/data/confidence-interval.html">Confidence Intervals</a> to learn more.</p>
+            <div class="user">
+                <p>How Many in Sample: <input type="number" id="sampleno" style="background: transparent;"></p>
+                <p>Sample Mean: <input type="number" id="mean" step="0.001" style="background: transparent;"></p>
+                <p>Standard Deviation: <input type="number" step="any" id="sd" style="background: transparent;"></p>
+                <p>Confidence Level:
+                <select id="level" style="background: transparent; ">
+                    <option>80</option>
+                    <option>85</option>
+                    <option>90</option>
+                    <option>95</option>
+                    <option>99</option>
+                    <option>99.5</option>
+                    <option>99.9</option>
+                </select>%</p>
+                <p><button id="click" style="background-color: powderblue;">Submit</button></p>
+            </div>
+        </div>
+        <h3><u>Output:</u></h3>
+        <div class="answer">
+            <p>Margin  of  Error: <mark><span id="mar">--</span></mark></p>
+            <p><span id="c_lev">--</span>%  Confidence  Interval: <span id="me">--</span>  ±  <span id="margin">--</span></p>
+        </div>
+        <h3><u>Conclution:</u></h3>
+        <p class="con">"With <span id='le'>--</span>% confidence the population mean is between <span id="min">--</span> and <span id="max">--</span>, based on <span id="sap">--</span> samples."</p>
+        <script>
+            document.getElementById('click').onclick = function(){
+                var n_sample = parseInt(document.getElementById('sampleno').value);
+                var s_mean = parseFloat(document.getElementById('mean').value);
+                var s_sd = parseFloat(document.getElementById('sd').value);
+                var c_level = document.getElementById('level').value;
+                if (c_level == "80"){
+                    var z_score = 1.282
+                } else if (c_level == "85"){
+                    var z_score = 1.440
+                } else if (c_level == "90"){
+                    var z_score = 1.645
+                } else if (c_level == "95"){
+                    var z_score = 1.960
+                } else if (c_level == "99"){
+                    var z_score = 2.576
+                } else if (c_level == "99.5"){
+                    var z_score = 2.807
+                } else if (c_level == "99.9"){
+                    var z_score = 3.291
+                }
+                var me = z_score * (s_sd/(Math.sqrt(n_sample)))
+        
+                document.getElementById('mar').innerHTML = me
+                document.getElementById('c_lev').innerHTML = c_level
+                document.getElementById('me').innerHTML = s_mean
+                document.getElementById('margin').innerHTML = me
+                min_range = s_mean - me
+                max_range = s_mean + me
+                document.getElementById('le').innerHTML = c_level
+                document.getElementById('min').innerHTML = min_range
+                document.getElementById('max').innerHTML = max_range
+                document.getElementById('sap').innerHTML = n_sample
+            }
+        </script>
+    </body>
+</html>
